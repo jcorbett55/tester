@@ -1,0 +1,6 @@
+application.name = ${pom.name}
+application.version = ${pom.version}
+application.artifact = ${pom.artifactId}
+application.group = ${pom.groupId}
+application.dependencies = ${pom.dependencies}
+

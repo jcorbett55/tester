@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+<definition name="searchFile" template="/WEB-INF/tiles/searchAerMeds_File.jsp" />
+
+<definition name="editAerMeds" extends="sideTabs">
+		<put-attribute name="pages">
+			<definition template="/WEB-INF/tiles/file/OrderTabs.jsp">
+				<put-attribute name="file" value="/WEB-INF/tiles/file/tabs/Orders.jsp" />
+			</definition>
+		</put-attribute>
+		<put-attribute name="scripts" value="/WEB-INF/tiles/file/OrderScripts.jsp" />
+	</definition>
+
+</tiles-definitions>

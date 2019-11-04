@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ahom</groupId>
+	<artifactId>AerMeds_Orders</artifactId>
+	<name>AerMeds Orders</name>
+	<packaging>war</packaging>
+	<version>1.0.2</version>
+	<properties>
+		<java.version>1.6</java.version>
+		
+		<commonUtil.version>2.0.1-SNAPSHOT</commonUtil.version>
+		<commonUI.version>1.1.2</commonUI.version>
+		
+		<!-- Test -->
+		<spring.version>4.1.1.RELEASE</spring.version>
+		<junit.version>4.11</junit.version>
+	</properties>
+	
+	<dependencies>
+	
+		<!-- AHOM -->
+		<dependency>
+			<groupId>com.ahom</groupId>
+			<artifactId>commonUtil</artifactId>
+			<version>${commonUtil.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ahom</groupId>
+			<artifactId>commonUI</artifactId>
+			<version>${commonUI.version}</version>
+			<classifier>classes</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ahom</groupId>
+			<artifactId>commonUI</artifactId>
+			<version>${commonUI.version}</version>
+			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+			
+		<!-- Jackson Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		
+		
+		<!-- Test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+	
+	<repositories>
+	
+		<repository>
+			<id>internal</id>
+			<url>http://archiva/repository/internal/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<url>http://archiva/repository/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		
+	</repositories>
+	
+    <build>
+    
+        <plugins>
+        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0.1</version>
+				<executions>
+					<execution>
+						<id>prepare-war</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+            <plugin>
+            	<groupId>com.google.code.maven-replacer-plugin</groupId>
+            	<artifactId>replacer</artifactId>
+            	<version>1.5.3</version>
+            	<executions>
+            		<execution>
+            			<phase>prepare-package</phase>
+	            		<goals>
+	            			<goal>replace</goal>
+	            		</goals>
+            		</execution>
+            	</executions>
+            	<configuration>
+            	
+            		<file>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/weblogic.xml</file>
+            		<token>START.*END</token>
+            		<value>commonUI</value>
+            		<regexFlags>
+						<regexFlags>DOTALL</regexFlags>
+            		</regexFlags>
+            	</configuration>
+            </plugin>
+            
+        </plugins>
+        
+        <resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+        
+    </build>
+    
+	<distributionManagement>
+	
+		<repository>
+			<id>internal</id>
+			<url>http://archiva/repository/internal/</url>
+		</repository>
+		
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://archiva/repository/snapshots/</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	
+	</distributionManagement>
+    
+</project>
